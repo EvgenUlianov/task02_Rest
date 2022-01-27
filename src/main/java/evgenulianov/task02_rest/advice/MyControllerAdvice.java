@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolationException;
+
 @RestControllerAdvice
 public class MyControllerAdvice {
 
@@ -23,6 +25,13 @@ public class MyControllerAdvice {
     @ExceptionHandler(UnauthorizedUser.class)
     public String uuHandler(UnauthorizedUser exception){
         return exception.getMessage();
+    }
+
+    @AliasFor("evgenulianov.task02_rest")
+    @ResponseStatus(HttpStatus.BAD_REQUEST) // 400
+    @ExceptionHandler(ConstraintViolationException.class)
+    public String cveException(ConstraintViolationException e) {
+        return "NOT VALIDATED! " + e.getMessage();
     }
 
 }
