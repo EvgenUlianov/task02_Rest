@@ -1,0 +1,9 @@
+version: "3.7"
+
+services:
+  app1:
+    image: 'myapp:1.0'
+    ports:
+      - '8080:43215'
+    container_name: 'myapp'
+

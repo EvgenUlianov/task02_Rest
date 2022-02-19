@@ -1,5 +1,6 @@
 package evgenulianov.task02_rest.service;
 
+import evgenulianov.task02_rest.model.MyUser;
 import evgenulianov.task02_rest.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,13 +13,11 @@ public class AuthorizationService {
     @Autowired
     UserRepository userRepository;
 
-    public List<Authorities> getAuthorities(String user, String password) {
-        if (isEmpty(user) || isEmpty(password)) {
-            throw new InvalidCredentials("User name or password is empty");
-        }
-        List<Authorities> userAuthorities = userRepository.getUserAuthorities(user, password);
+    public List<Authorities> getAuthorities(MyUser checkingUser) {
+
+        List<Authorities> userAuthorities = userRepository.getUserAuthorities(checkingUser);
         if (isEmpty(userAuthorities)) {
-            throw new UnauthorizedUser("Unknown user " + user);
+            throw new UnauthorizedUser("Unknown user " + checkingUser.getUserName());
         }
         return userAuthorities;
     }
